@@ -18,6 +18,18 @@ class EditorjsField extends \acf_field
             'tools' => ['header', 'paragraph', 'list', 'quote', 'code', 'delimiter'],
             'min_height' => 300
         ];
+        
+        // Environment
+        $this->l10n = [
+            'error' => __('Error! Please enter a higher value', 'acf-editorjs'),
+        ];
+        
+        // URLs
+        $this->settings = [
+            'url' => ACF_EDITORJS_URL,
+            'path' => ACF_EDITORJS_PATH,
+            'version' => ACF_EDITORJS_VERSION,
+        ];
 
         parent::__construct();
     }
@@ -81,8 +93,7 @@ class EditorjsField extends \acf_field
      */
     public function render_field($field)
     {
-        // Enqueue assets
-        $this->enqueue_assets();
+        error_log('EditorJS field render_field called for: ' . $field['name']);
 
         // Field attributes
         $atts = [
@@ -100,13 +111,17 @@ class EditorjsField extends \acf_field
             <textarea name="<?php echo esc_attr($field['name']); ?>" style="display: none;"><?php echo esc_textarea($field['value']); ?></textarea>
         </div>
         <?php
+        
+        error_log('EditorJS field HTML rendered');
     }
 
     /**
-     * Enqueue scripts and styles
+     * Enqueue admin scripts
      */
-    public function enqueue_assets()
+    public function input_admin_enqueue_scripts()
     {
+        error_log('EditorJS input_admin_enqueue_scripts called');
+        
         // EditorJS core
         wp_enqueue_script(
             'editorjs',
@@ -157,54 +172,28 @@ class EditorjsField extends \acf_field
             true
         );
 
-        wp_enqueue_script(
-            'editorjs-table',
-            'https://cdn.jsdelivr.net/npm/@editorjs/table@latest',
-            ['editorjs'],
-            null,
-            true
-        );
-
-        wp_enqueue_script(
-            'editorjs-warning',
-            'https://cdn.jsdelivr.net/npm/@editorjs/warning@latest',
-            ['editorjs'],
-            null,
-            true
-        );
-
-        wp_enqueue_script(
-            'editorjs-image',
-            'https://cdn.jsdelivr.net/npm/@editorjs/image@latest',
-            ['editorjs'],
-            null,
-            true
-        );
-
-        wp_enqueue_script(
-            'editorjs-embed',
-            'https://cdn.jsdelivr.net/npm/@editorjs/embed@latest',
-            ['editorjs'],
-            null,
-            true
-        );
-
-        // Custom initialization script
-        wp_enqueue_script(
+        // Custom field script
+        $url = $this->settings['url'];
+        $version = $this->settings['version'];
+        
+        wp_register_script(
             'acf-editorjs',
-            ACF_EDITORJS_URL . 'assets/js/field.js',
-            ['acf', 'editorjs'],
-            ACF_EDITORJS_VERSION,
-            true
+            "{$url}assets/js/field.js",
+            ['acf-input', 'editorjs'],
+            $version
         );
-
-        // Custom styles
-        wp_enqueue_style(
+        wp_enqueue_script('acf-editorjs');
+        
+        // Custom field style
+        wp_register_style(
             'acf-editorjs',
-            ACF_EDITORJS_URL . 'assets/css/field.css',
+            "{$url}assets/css/field.css",
             ['acf-input'],
-            ACF_EDITORJS_VERSION
+            $version
         );
+        wp_enqueue_style('acf-editorjs');
+        
+        error_log('EditorJS scripts and styles enqueued');
     }
 
     /**
