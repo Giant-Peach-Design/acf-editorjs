@@ -14,6 +14,12 @@
         const $input = $field.find('.acf-editorjs-field');
         const $textarea = $field.find('textarea');
         
+        // Check if EditorJS is available
+        if (typeof EditorJS === 'undefined') {
+            console.error('EditorJS is not loaded');
+            return;
+        }
+        
         // Get field settings
         const tools = JSON.parse($input.attr('data-tools') || '[]');
         const placeholder = $input.attr('data-placeholder') || '';
@@ -25,9 +31,9 @@
         // Configure tools
         const toolsConfig = {};
         
-        if (tools.includes('header')) {
+        if (tools.includes('header') && typeof window.Header !== 'undefined') {
             toolsConfig.header = {
-                class: Header,
+                class: window.Header,
                 config: {
                     placeholder: 'Enter a header',
                     levels: [1, 2, 3, 4, 5, 6],
@@ -36,25 +42,16 @@
             };
         }
         
-        if (tools.includes('paragraph')) {
-            toolsConfig.paragraph = {
-                class: Paragraph,
-                config: {
-                    placeholder: placeholder || 'Start typing...'
-                }
-            };
-        }
-        
-        if (tools.includes('list')) {
+        if (tools.includes('list') && typeof window.List !== 'undefined') {
             toolsConfig.list = {
-                class: List,
+                class: window.List,
                 inlineToolbar: true
             };
         }
         
-        if (tools.includes('quote')) {
+        if (tools.includes('quote') && typeof window.Quote !== 'undefined') {
             toolsConfig.quote = {
-                class: Quote,
+                class: window.Quote,
                 inlineToolbar: true,
                 config: {
                     quotePlaceholder: 'Enter a quote',
@@ -63,29 +60,29 @@
             };
         }
         
-        if (tools.includes('code')) {
+        if (tools.includes('code') && typeof window.CodeTool !== 'undefined') {
             toolsConfig.code = {
-                class: CodeTool,
+                class: window.CodeTool,
                 config: {
                     placeholder: 'Enter code'
                 }
             };
         }
         
-        if (tools.includes('delimiter')) {
-            toolsConfig.delimiter = Delimiter;
+        if (tools.includes('delimiter') && typeof window.Delimiter !== 'undefined') {
+            toolsConfig.delimiter = window.Delimiter;
         }
         
-        if (tools.includes('table')) {
+        if (tools.includes('table') && typeof window.Table !== 'undefined') {
             toolsConfig.table = {
-                class: Table,
+                class: window.Table,
                 inlineToolbar: true
             };
         }
         
-        if (tools.includes('warning')) {
+        if (tools.includes('warning') && typeof window.Warning !== 'undefined') {
             toolsConfig.warning = {
-                class: Warning,
+                class: window.Warning,
                 inlineToolbar: true,
                 config: {
                     titlePlaceholder: 'Title',
@@ -94,9 +91,9 @@
             };
         }
         
-        if (tools.includes('image')) {
+        if (tools.includes('image') && typeof window.ImageTool !== 'undefined') {
             toolsConfig.image = {
-                class: ImageTool,
+                class: window.ImageTool,
                 config: {
                     endpoints: {
                         byFile: ajaxurl + '?action=acf_editorjs_upload_image',
@@ -109,9 +106,9 @@
             };
         }
         
-        if (tools.includes('embed')) {
+        if (tools.includes('embed') && typeof window.Embed !== 'undefined') {
             toolsConfig.embed = {
-                class: Embed,
+                class: window.Embed,
                 config: {
                     services: {
                         youtube: true,
@@ -151,6 +148,7 @@
             onReady: function() {
                 // Editor is ready
                 $field.removeClass('acf-loading');
+                console.log('EditorJS initialized');
             },
             onChange: async function() {
                 // Save data to textarea
