@@ -1,0 +1,24 @@
+{
+  "name": "giantpeach/acf-editorjs",
+  "description": "ACF field for EditorJS rich text editor",
+  "type": "wordpress-plugin",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Giant Peach",
+      "email": "dev@giantpeach.agency"
+    }
+  ],
+  "require": {
+    "php": ">=7.4",
+    "composer/installers": "^1.0 || ^2.0"
+  },
+  "autoload": {
+    "psr-4": {
+      "Giantpeach\\AcfEditorjs\\": "src/"
+    }
+  },
+  "extra": {
+    "installer-name": "acf-editorjs"
+  }
+}
