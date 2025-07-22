@@ -39,9 +39,6 @@ add_action('plugins_loaded', function() {
     // Include field type
     add_action('acf/include_field_types', function() {
         require_once ACF_EDITORJS_PATH . 'src/EditorjsField.php';
-        $field = new \Giantpeach\AcfEditorjs\EditorjsField();
-        error_log('ACF EditorJS Field registered: ' . get_class($field));
+        new \Giantpeach\AcfEditorjs\EditorjsField();
     });
-    
-    error_log('ACF EditorJS plugin loaded, ACF is active');
 }, 20);

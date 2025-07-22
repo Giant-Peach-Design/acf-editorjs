@@ -93,8 +93,6 @@ class EditorjsField extends \acf_field
      */
     public function render_field($field)
     {
-        error_log('EditorJS field render_field called for: ' . $field['name']);
-
         // Field attributes
         $atts = [
             'id' => $field['id'],
@@ -111,8 +109,6 @@ class EditorjsField extends \acf_field
             <textarea name="<?php echo esc_attr($field['name']); ?>" style="display: none;"><?php echo esc_textarea($field['value']); ?></textarea>
         </div>
         <?php
-        
-        error_log('EditorJS field HTML rendered');
     }
 
     /**
@@ -120,67 +116,16 @@ class EditorjsField extends \acf_field
      */
     public function input_admin_enqueue_scripts()
     {
-        error_log('EditorJS input_admin_enqueue_scripts called');
-        
-        // EditorJS core
-        wp_enqueue_script(
-            'editorjs',
-            'https://cdn.jsdelivr.net/npm/@editorjs/editorjs@latest',
-            [],
-            null,
-            true
-        );
-
-        // EditorJS tools
-        wp_enqueue_script(
-            'editorjs-header',
-            'https://cdn.jsdelivr.net/npm/@editorjs/header@latest',
-            ['editorjs'],
-            null,
-            true
-        );
-
-        wp_enqueue_script(
-            'editorjs-list',
-            'https://cdn.jsdelivr.net/npm/@editorjs/list@latest',
-            ['editorjs'],
-            null,
-            true
-        );
-
-        wp_enqueue_script(
-            'editorjs-quote',
-            'https://cdn.jsdelivr.net/npm/@editorjs/quote@latest',
-            ['editorjs'],
-            null,
-            true
-        );
-
-        wp_enqueue_script(
-            'editorjs-code',
-            'https://cdn.jsdelivr.net/npm/@editorjs/code@latest',
-            ['editorjs'],
-            null,
-            true
-        );
-
-        wp_enqueue_script(
-            'editorjs-delimiter',
-            'https://cdn.jsdelivr.net/npm/@editorjs/delimiter@latest',
-            ['editorjs'],
-            null,
-            true
-        );
-
-        // Custom field script
         $url = $this->settings['url'];
         $version = $this->settings['version'];
         
+        // ACF EditorJS bundle (includes EditorJS core + tools + field initialization)
         wp_register_script(
             'acf-editorjs',
-            "{$url}assets/js/field.js",
-            ['acf-input', 'editorjs'],
-            $version
+            "{$url}dist/acf-editorjs.iife.js",
+            ['acf-input'],
+            $version,
+            true
         );
         wp_enqueue_script('acf-editorjs');
         
@@ -192,8 +137,6 @@ class EditorjsField extends \acf_field
             $version
         );
         wp_enqueue_style('acf-editorjs');
-        
-        error_log('EditorJS scripts and styles enqueued');
     }
 
     /**

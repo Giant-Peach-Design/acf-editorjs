@@ -98,10 +98,20 @@ function render_editorjs_content($data) {
 
 ### Building Assets
 
-The plugin uses CDN versions of Editor.js by default. To bundle your own:
+The plugin includes EditorJS and its tools locally for better control and performance:
 
 1. Install dependencies: `npm install`
-2. Build: `npm run build`
+2. Build all assets: `npm run build`
+3. For development with watch mode: `npm run dev`
+
+### Build Process
+
+- `npm run build` - Builds the complete bundle
+- `npm run dev` - Builds and watches for changes
+- `npm run clean` - Removes the dist directory
+
+The build process creates:
+- `dist/acf-editorjs.iife.js` - Complete bundle with EditorJS core, tools, and field initialization (~357KB)
 
 ## License
 

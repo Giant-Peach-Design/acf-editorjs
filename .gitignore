@@ -2,8 +2,7 @@
 /vendor/
 /node_modules/
 
-# Build files
-/dist/
+# Build files (keep dist/ as it contains required assets)
 /build/
 
 # OS files

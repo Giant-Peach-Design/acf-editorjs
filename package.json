@@ -1,0 +1,35 @@
+{
+  "name": "acf-editorjs",
+  "version": "1.0.0",
+  "description": "ACF field for EditorJS rich text editor",
+  "private": true,
+  "scripts": {
+    "build": "npm run clean && vite build",
+    "dev": "npm run clean && vite build --watch",
+    "clean": "rm -rf dist/"
+  },
+  "dependencies": {
+    "@editorjs/editorjs": "^2.30.5",
+    "@editorjs/header": "^2.8.7",
+    "@editorjs/list": "^1.10.0",
+    "@editorjs/quote": "^2.7.2",
+    "@editorjs/code": "^2.9.2",
+    "@editorjs/delimiter": "^1.4.2",
+    "@editorjs/table": "^2.4.1",
+    "@editorjs/warning": "^1.4.0",
+    "@editorjs/image": "^2.9.3",
+    "@editorjs/embed": "^2.7.4"
+  },
+  "devDependencies": {
+    "vite": "^6.0.1"
+  },
+  "keywords": [
+    "wordpress",
+    "acf",
+    "editorjs",
+    "field",
+    "plugin"
+  ],
+  "author": "Giant Peach",
+  "license": "MIT"
+}
