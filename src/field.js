@@ -38,9 +38,9 @@
         // Configure tools
         const toolsConfig = {};
         
-        if (tools.includes('header') && typeof window.Header !== 'undefined') {
+        if (tools.includes('header') && window.EditorJSTools?.Header) {
             toolsConfig.header = {
-                class: window.Header,
+                class: window.EditorJSTools.Header,
                 config: {
                     placeholder: 'Enter a header',
                     levels: [1, 2, 3, 4, 5, 6],
@@ -49,16 +49,16 @@
             };
         }
         
-        if (tools.includes('list') && typeof window.List !== 'undefined') {
+        if (tools.includes('list') && window.EditorJSTools?.List) {
             toolsConfig.list = {
-                class: window.List,
+                class: window.EditorJSTools.List,
                 inlineToolbar: true
             };
         }
         
-        if (tools.includes('quote') && typeof window.Quote !== 'undefined') {
+        if (tools.includes('quote') && window.EditorJSTools?.Quote) {
             toolsConfig.quote = {
-                class: window.Quote,
+                class: window.EditorJSTools.Quote,
                 inlineToolbar: true,
                 config: {
                     quotePlaceholder: 'Enter a quote',
@@ -67,17 +67,67 @@
             };
         }
         
-        if (tools.includes('code') && typeof window.CodeTool !== 'undefined') {
+        if (tools.includes('code') && window.EditorJSTools?.CodeTool) {
             toolsConfig.code = {
-                class: window.CodeTool,
+                class: window.EditorJSTools.CodeTool,
                 config: {
                     placeholder: 'Enter code'
                 }
             };
         }
         
-        if (tools.includes('delimiter') && typeof window.Delimiter !== 'undefined') {
-            toolsConfig.delimiter = window.Delimiter;
+        if (tools.includes('delimiter') && window.EditorJSTools?.Delimiter) {
+            toolsConfig.delimiter = window.EditorJSTools.Delimiter;
+        }
+        
+        if (tools.includes('table') && window.EditorJSTools?.Table) {
+            toolsConfig.table = {
+                class: window.EditorJSTools.Table,
+                inlineToolbar: true
+            };
+        }
+        
+        if (tools.includes('warning') && window.EditorJSTools?.Warning) {
+            toolsConfig.warning = {
+                class: window.EditorJSTools.Warning,
+                inlineToolbar: true,
+                config: {
+                    titlePlaceholder: 'Title',
+                    messagePlaceholder: 'Message'
+                }
+            };
+        }
+        
+        if (tools.includes('image') && window.EditorJSTools?.ImageTool) {
+            toolsConfig.image = {
+                class: window.EditorJSTools.ImageTool,
+                config: {
+                    endpoints: {
+                        byFile: ajaxurl + '?action=acf_editorjs_upload_image',
+                        byUrl: ajaxurl + '?action=acf_editorjs_fetch_image'
+                    },
+                    additionalRequestData: {
+                        nonce: acf.get('nonce')
+                    }
+                }
+            };
+        }
+        
+        if (tools.includes('embed') && window.EditorJSTools?.Embed) {
+            toolsConfig.embed = {
+                class: window.EditorJSTools.Embed,
+                config: {
+                    services: {
+                        youtube: true,
+                        vimeo: true,
+                        twitter: true,
+                        instagram: true,
+                        pinterest: true,
+                        facebook: true,
+                        codepen: true
+                    }
+                }
+            };
         }
         
         // Parse existing data

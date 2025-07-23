@@ -12,15 +12,17 @@ import Embed from '@editorjs/embed';
 
 // Expose EditorJS and tools to global window object
 window.EditorJS = EditorJS;
-window.Header = Header;
-window.List = List;
-window.Quote = Quote;
-window.CodeTool = CodeTool;
-window.Delimiter = Delimiter;
-window.Table = Table;
-window.Warning = Warning;
-window.ImageTool = ImageTool;
-window.Embed = Embed;
+window.EditorJSTools = {
+  Header,
+  List,
+  Quote,
+  CodeTool,
+  Delimiter,
+  Table,
+  Warning,
+  ImageTool,
+  Embed
+};
 
 // Import and initialize ACF field functionality
 import './field.js';
